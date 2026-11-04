@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StudyBoost — Ton espace de révision</title>
+<style>
+:root{--bg:#f5f6ff;--ink:#1c1b38;--muted:#777794;--purple:#6d5ce8;--lav:#eeeaff;--line:#e9e8fa;--green:#dff8ed;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,textarea,select{font:inherit}button{cursor:pointer;border:0}
+.layout{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+aside{background:#fff;border-right:1px solid var(--line);padding:24px 17px;display:flex;flex-direction:column;gap:25px}
+.brand{font-weight:900;font-size:21px;display:flex;gap:10px;align-items:center}.logo{background:linear-gradient(135deg,#6d5ce8,#a89cff);color:#fff;border-radius:12px;width:38px;height:38px;display:grid;place-items:center}
+.navtitle{font-size:10px;letter-spacing:1.3px;color:#aaa;text-transform:uppercase;font-weight:800;padding:0 9px}.nav{display:grid;gap:6px}.nav button{text-align:left;background:transparent;color:#74738f;padding:11px;border-radius:11px;font-weight:700}.nav button.active,.nav button:hover{background:var(--lav);color:var(--purple)}.nav button span{margin-right:9px}
+aside .note{margin-top:auto;background:linear-gradient(145deg,#f0edff,#e4fbf1);padding:16px;border-radius:16px;font-size:12px;color:#666780}.note b{display:block;color:var(--ink);font-size:14px;margin-bottom:5px}
+main{padding:27px clamp(16px,4vw,42px);max-width:1400px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;gap:12px}.top small{color:var(--muted);font-weight:700}.top h1{margin:3px 0;font-size:27px;letter-spacing:-1px}.avatar{background:#ffe4b9;padding:9px 12px;border-radius:12px;font-weight:800}
+.hero{border-radius:22px;background:linear-gradient(110deg,#6d5ce8,#9284f8);color:white;padding:25px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px}.hero h2{font-size:24px;margin:0 0 6px;letter-spacing:-.6px}.hero p{margin:0;color:#eeeaff}.hero button{background:white;color:var(--purple);font-weight:800;padding:12px 15px;border-radius:11px;white-space:nowrap}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:17px 0}.stat,.panel{background:white;border:1px solid var(--line);border-radius:17px;padding:17px}.stat .emoji{display:inline-grid;place-items:center;background:var(--lav);width:34px;height:34px;border-radius:10px;margin-bottom:8px}.stat strong{display:block;font-size:24px;letter-spacing:-1px}.stat small{color:var(--muted)}
+.grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(260px,.85fr);gap:16px}.stack{display:grid;gap:16px;align-content:start}.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}.head h3{margin:0;font-size:16px}.sub{font-size:12px;color:var(--muted)}
+form.add{display:flex;gap:8px;margin-bottom:12px}input,textarea,select{border:1px solid var(--line);border-radius:10px;padding:10px 11px;background:white;color:var(--ink);outline:none;width:100%;min-width:0}input:focus,textarea:focus,select:focus{border-color:var(--purple)}.btn{padding:10px 14px;border-radius:10px;font-weight:800;background:var(--purple);color:#fff}.btn.light{background:var(--lav);color:var(--purple)}.btn.white{background:white;color:var(--purple)}
+.tasks{display:grid;gap:8px}.task{display:flex;align-items:center;gap:10px;padding:11px;border:1px solid #f0effa;border-radius:11px}.task input{width:17px;height:17px;accent-color:var(--purple)}.task .txt{flex:1;font-weight:650;overflow-wrap:anywhere}.task.done .txt{text-decoration:line-through;color:#aaa}.chip{background:var(--lav);color:var(--purple);font-size:11px;font-weight:800;padding:4px 8px;border-radius:7px}.delete{background:transparent;color:#aaa;font-size:18px;padding:0 3px}.progress{height:6px;background:#eeeaff;border-radius:9px;margin:16px 0 5px;overflow:hidden}.progress span{display:block;height:100%;background:var(--purple);width:0}
+.timer{text-align:center;font-size:43px;font-weight:900;letter-spacing:-2px;margin:10px 0}.center{text-align:center}.actions{display:flex;justify-content:center;gap:8px;margin-top:12px}.actions button{padding:10px 13px;border-radius:10px;font-weight:800}
+textarea{resize:vertical;min-height:110px}.fieldlabel{display:block;font-size:12px;color:var(--muted);font-weight:800;margin:10px 0 5px}.output{background:#faf9ff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:12px;white-space:pre-wrap;font-size:13px;overflow-wrap:anywhere;min-height:40px}.output:empty{display:none}.flashcard{background:linear-gradient(140deg,#f1eeff,#e9fbf4);border-radius:14px;padding:18px;min-height:100px;display:grid;place-items:center;text-align:center;font-weight:750;margin:10px 0}.flashcard small{display:block;color:var(--muted);font-weight:600;margin-bottom:5px}.tip{background:#e8faf3}.tip p{color:#557568;font-size:13px;margin-bottom:0}
+footer{text-align:center;color:#aaa;font-size:11px;padding:22px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}aside{display:none}.grid{grid-template-columns:1fr}.hero{align-items:flex-start;flex-direction:column}.hero h2{font-size:21px}}
+@media(max-width:540px){main{padding:17px}.stats{gap:8px}.stat{padding:12px}.stat strong{font-size:20px}.stat small{font-size:11px}.top h1{font-size:23px}.avatar{font-size:12px}.hero{padding:21px}.panel{padding:14px}}
+</style>
+</head>
+<body><div class="layout">
+<aside><div class="brand"><div class="logo">S</div>StudyBoost</div>
+<div><div class="navtitle">Mon espace</div><nav class="nav">
+<button class="active" onclick="scrollTo(0,0)"><span>🏠</span>Accueil</button>
+<button onclick="go('tasks-panel')"><span>📝</span>Mes devoirs</button>
+<button onclick="go('focus-panel')"><span>⏱️</span>Mode focus</button>
+<button onclick="go('revision-panel')"><span>🧠</span>Fiches & quiz</button>
+<button onclick="go('helper-panel')"><span>🤖</span>Assistant de cours</button>
+</nav></div><div class="note"><b>🌱 Un pas à la fois</b>Tu n’as pas besoin de tout faire d’un coup. Chaque petite session compte.</div>
+</aside>
+<main>
+<header class="top"><div><small id="date"></small><h1>Salut, champion·ne ! 👋</h1></div><div class="avatar">🎓 Mon espace</div></header>
+<section class="hero"><div><h2>On fait avancer tes objectifs ? ✨</h2><p>Planifie, révise et progresse à ton rythme.</p></div><button onclick="go('new-task')">＋ Ajouter un devoir</button></section>
+<section class="stats"><div class="stat"><span class="emoji">📚</span><strong id="left">0</strong><small>À faire</small></div><div class="stat"><span class="emoji">🎯</span><strong id="done">0</strong><small>Terminés</small></div><div class="stat"><span class="emoji">🌟</span><strong id="pct">0%</strong><small>Progression</small></div></section>
+<section class="grid">
+<div class="stack">
+<div class="panel" id="tasks-panel"><div class="head"><h3>📝 Mes devoirs</h3><span class="sub">Ta liste</span></div>
+<form class="add" id="task-form"><input id="new-task" placeholder="Ex. Relire le chapitre 4…" maxlength="120" required><button class="btn">Ajouter</button></form><div class="tasks" id="tasks"></div><div class="progress"><span id="bar"></span></div><div class="sub" id="progress-text"></div>
+</div>
+<div class="panel" id="revision-panel"><div class="head"><h3>🧠 Fiche & quiz express</h3><span class="chip">Gratuit</span></div>
+<label class="fieldlabel" for="lesson">Colle un extrait de ton cours ici</label><textarea id="lesson" placeholder="Ex. La photosynthèse est le processus par lequel les plantes..."></textarea>
+<div class="actions" style="justify-content:flex-start"><button class="btn" id="make-summary">Créer une fiche</button><button class="btn light" id="make-quiz">Créer un quiz</button></div><div class="output" id="revision-output"></div>
+</div>
+</div>
+<div class="stack">
+<div class="panel" id="focus-panel"><div class="head"><h3>⏱️ Mode focus</h3><span class="chip">Pomodoro</span></div><div class="timer" id="timer">25:00</div><div class="sub center" id="timer-caption">Une session de concentration, sans pression.</div><div class="actions"><button class="btn" id="start">Démarrer</button><button class="btn light" id="reset">Reset</button></div></div>
+<div class="panel" id="helper-panel"><div class="head"><h3>🤖 Assistant de cours</h3><span class="chip">Mode démo</span></div><p class="sub">Pose une question sur ton cours. Cet assistant local propose une aide simple, sans connexion à une IA en ligne.</p><label class="fieldlabel" for="question">Ta question</label><input id="question" placeholder="Ex. Explique-moi la photosynthèse"><button class="btn" style="margin-top:9px" id="ask">M’aider à comprendre</button><div class="output" id="answer"></div></div>
+<div class="panel tip"><h3>💡 Conseil du jour</h3><p>Essaie de travailler par petites étapes : commence par 10 minutes, puis fais une pause. Le plus dur, c’est souvent de se lancer !</p></div>
+</div></section><footer>StudyBoost • Prototype gratuit • Tes tâches sont sauvegardées sur cet appareil</footer>
+</main></div>
+<script>
+const $=id=>document.getElementById(id);
+$('date').textContent=new Intl.DateTimeFormat('fr-FR',{weekday:'long',day:'numeric',month:'long'}).format(new Date()).toUpperCase();
+function go(id){$(id).scrollIntoView({behavior:'smooth',block:'center'});if(id==='new-task')$('new-task').focus()}
+let tasks=[];try{tasks=JSON.parse(localStorage.getItem('studyboost_tasks')||'[]')}catch(e){tasks=[]}
+if(!tasks.length)tasks=[{text:'Exercices de maths — page 42',done:false},{text:'Apprendre le vocabulaire anglais',done:false},{text:'Lire 10 pages du livre',done:false}];
+function save(){try{localStorage.setItem('studyboost_tasks',JSON.stringify(tasks))}catch(e){}}
+function render(){
+ const box=$('tasks');box.innerHTML='';
+ tasks.forEach((t,i)=>{const row=document.createElement('div');row.className='task'+(t.done?' done':'');
+ const cb=document.createElement('input');cb.type='checkbox';cb.checked=t.done;cb.setAttribute('aria-label','Terminer '+t.text);cb.onchange=()=>{tasks[i].done=cb.checked;save();render()};
+ const txt=document.createElement('span');txt.className='txt';txt.textContent=t.text;
+ const chip=document.createElement('span');chip.className='chip';chip.textContent=t.done?'Terminé':'À faire';
+ const del=document.createElement('button');del.className='delete';del.textContent='×';del.title='Supprimer';del.onclick=()=>{tasks.splice(i,1);save();render()};
+ row.append(cb,txt,chip,del);box.append(row)});
+ const completed=tasks.filter(t=>t.done).length,total=tasks.length,ratio=total?Math.round(completed/total*100):0;
+ $('left').textContent=total-completed;$('done').textContent=completed;$('pct').textContent=ratio+'%';$('bar').style.width=ratio+'%';$('progress-text').textContent=`${completed} sur ${total} terminé${completed>1?'s':''}`;save();
+}
+$('task-form').onsubmit=e=>{e.preventDefault();let v=$('new-task').value.trim();if(v){tasks.push({text:v,done:false});$('new-task').value='';render()}};
+render();
+// Pomodoro
+let secs=1500,interval=null;
+function show(){ $('timer').textContent=String(Math.floor(secs/60)).padStart(2,'0')+':'+String(secs%60).padStart(2,'0')}
+$('start').onclick=()=>{if(interval){clearInterval(interval);interval=null;$('start').textContent='Reprendre';return} $('start').textContent='Pause';interval=setInterval(()=>{secs--;show();if(secs<=0){clearInterval(interval);interval=null;$('start').textContent='Démarrer';$('timer-caption').textContent='Session terminée, bravo ! 🎉'}},1000)};
+$('reset').onclick=()=>{clearInterval(interval);interval=null;secs=1500;show();$('start').textContent='Démarrer';$('timer-caption').textContent='Une session de concentration, sans pression.'};
+// Local course helpers, no API
+function getText(){return $('lesson').value.trim()}
+$('make-summary').onclick=()=>{let s=getText();if(!s){$('revision-output').textContent='Ajoute d’abord un extrait de cours 🙂';return}
+let sentences=s.split(/(?<=[.!?])\s+/).filter(x=>x.trim());let summary=sentences.slice(0,5).map(x=>'• '+x.trim()).join('\n');
+$('revision-output').textContent='📌 FICHE EXPRESS\n\n'+(summary||s)+'\n\nAstuce : relis chaque point, puis essaie de le reformuler avec tes propres mots.'};
+$('make-quiz').onclick=()=>{let s=getText();if(!s){$('revision-output').textContent='Ajoute d’abord un extrait de cours 🙂';return}
+let terms=s.split(/[,.!?;:\n]/).map(x=>x.trim()).filter(x=>x.length>18).slice(0,5);
+$('revision-output').textContent='🧩 QUESTIONS POUR TE TESTER\n\n'+(terms.length?terms.map((x,i)=>(i+1)+'. Explique avec tes mots : « '+x+' »').join('\n\n'):'1. Quel est le sujet principal de cet extrait ?\n2. Cite deux idées importantes.\n3. Explique le cours avec tes propres mots.')+'\n\nRéponds sur une feuille, puis compare avec ton cours.'};
+$('ask').onclick=()=>{let q=$('question').value.trim(),course=getText();if(!q){$('answer').textContent='Écris une question pour commencer 🙂';return}
+if(course){$('answer').textContent='📝 Pour t’aider à réfléchir :\n\nTa question : '+q+'\n\nRelis cet extrait de ton cours et repère les phrases qui répondent à ta question :\n'+course.slice(0,1100)+'\n\nJe suis ici en mode démo local : pour une explication IA personnalisée, il faudra connecter un service IA.'}
+else $('answer').textContent='🧠 Bonne question ! Ajoute ton cours dans la zone « Fiche & quiz express » pour que je puisse t’aider à repérer les idées liées. Cette version est une démo locale, sans véritable IA connectée.'};
+</script></body></html>
