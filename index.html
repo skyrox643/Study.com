@@ -4,6 +4,53 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StudyBoost — Future of Learning</title>
+<style>
+:root{
+ --bg:#080713;--panel:#111022;--panel2:#17142c;--line:rgba(174,142,255,.18);
+ --violet:#9b6cff;--pink:#ec71ff;--cyan:#61e7ff;--text:#f4f0ff;--muted:#a7a0c2;
+ --good:#70f0c0;--shadow:0 0 35px rgba(137,78,255,.12);
+}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(ellipse at 20% 0%,#211345 0,transparent 38%),radial-gradient(ellipse at 90% 20%,#10243c 0,transparent 28%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+button,input,textarea,select{font:inherit}button{cursor:pointer;color:inherit}
+.app{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:100vh}
+.sidebar{padding:25px 16px;border-right:1px solid var(--line);background:rgba(8,7,19,.76);backdrop-filter:blur(20px);display:flex;flex-direction:column;gap:25px}
+.brand{display:flex;align-items:center;gap:11px;padding:0 10px;font-size:20px;font-weight:850;letter-spacing:-.6px}
+.logo{height:38px;width:38px;border-radius:13px;background:linear-gradient(135deg,var(--violet),var(--pink));display:grid;place-items:center;box-shadow:0 0 24px #9b6cff65;font-size:20px}
+.brand span{color:var(--pink)}
+.navlabel{font-size:10px;color:#77718f;letter-spacing:1.8px;font-weight:800;padding:0 12px;margin-bottom:7px}
+.nav{display:grid;gap:6px}.nav button{border:1px solid transparent;background:transparent;padding:12px 13px;border-radius:12px;text-align:left;color:var(--muted);display:flex;gap:12px;align-items:center;transition:.2s}
+.nav button:hover,.nav button.active{color:white;background:linear-gradient(90deg,#8d5aff24,#ec71ff0b);border-color:#9b6cff30}.nav button.active{box-shadow:inset 3px 0 var(--violet)}
+.navicon{width:20px;text-align:center}
+.sidebottom{margin-top:auto;border:1px solid var(--line);border-radius:16px;padding:15px;background:linear-gradient(135deg,#20143a,#101425)}
+.sidebottom b{display:block;margin-bottom:7px}.sidebottom p{color:var(--muted);font-size:12px;line-height:1.5;margin:0 0 12px}
+.mini-btn,.primary,.secondary,.ghost{border:0;border-radius:11px;padding:10px 14px;font-weight:750;transition:.2s}
+.primary{background:linear-gradient(135deg,var(--violet),#c15bff);box-shadow:0 7px 24px #8e55ff35;color:white}.primary:hover{transform:translateY(-1px);filter:brightness(1.12)}
+.secondary{background:#282044;border:1px solid #9b6cff36}.ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}
+main{padding:28px clamp(16px,3vw,42px);max-width:1500px;width:100%;margin:auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:28px}.eyebrow{color:var(--cyan);font-size:11px;letter-spacing:2px;font-weight:800;text-transform:uppercase}
+h1{font-size:clamp(26px,3vw,38px);letter-spacing:-1.3px;margin:7px 0 0}.sub{color:var(--muted);margin:8px 0 0;font-size:14px}
+.profile{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:8px 12px;background:#111022}.avatar{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#57ddff,#a76bff);display:grid;place-items:center;color:#080713;font-weight:900}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:20px}
+.stat,.panel{background:linear-gradient(145deg,rgba(22,19,43,.92),rgba(13,12,27,.92));border:1px solid var(--line);border-radius:19px;box-shadow:var(--shadow)}
+.stat{padding:17px;position:relative;overflow:hidden}.stat:after{content:"";position:absolute;width:90px;height:90px;border-radius:50%;background:#9b6cff13;right:-25px;top:-28px}
+.stathead{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.statnum{font-size:27px;font-weight:850;margin-top:10px;letter-spacing:-1px}.statnote{font-size:11px;color:var(--good);margin-top:4px}
+.layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(290px,.85fr);gap:17px}
+.panel{padding:20px;margin-bottom:17px}.panelhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.panelhead h2{font-size:16px;margin:0}.panelhead small{color:var(--muted)}
+.tasklist{display:grid;gap:9px}.task{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid #ffffff0c;background:#ffffff04;border-radius:13px}.task input{accent-color:var(--violet);width:17px;height:17px}.taskbody{flex:1;min-width:0}.taskname{font-size:13px;font-weight:700}.task.done .taskname{text-decoration:line-through;color:#7e7897}.taskmeta{font-size:11px;color:var(--muted);margin-top:4px}.tag{font-size:10px;padding:5px 8px;border-radius:8px;background:#9b6cff18;color:#c3a7ff;border:1px solid #9b6cff2b;white-space:nowrap}.tag.high{color:#ff9ab8;background:#ff669a12;border-color:#ff669a25}
+.addrow{display:flex;gap:8px;margin-top:13px}.field{background:#0b0a18;border:1px solid #ffffff18;color:var(--text);border-radius:11px;padding:11px 12px;min-width:0;width:100%;outline:none}.field:focus{border-color:#9b6cff88;box-shadow:0 0 0 3px #9b6cff12}.addrow .field{flex:1}
+.progressbar{height:7px;background:#ffffff0b;border-radius:99px;overflow:hidden;margin-top:12px}.progressbar span{display:block;height:100%;background:linear-gradient(90deg,var(--violet),var(--cyan));border-radius:99px;transition:width .3s}
+.timer{text-align:center;padding:8px 0 3px}.timer-ring{width:180px;height:180px;margin:10px auto 18px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(var(--violet) 0deg,#61e7ff 210deg,#30234e 210deg 360deg);box-shadow:0 0 35px #9b6cff20}
+.timer-ring:before{content:"";position:absolute;inset:8px;background:#111022;border-radius:50%}.timer-value{position:relative;font-size:39px;font-weight:850;letter-spacing:-1px}.timer-label{position:relative;color:var(--muted);font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+.timercontrols{display:flex;justify-content:center;gap:9px}.timercontrols button{min-width:92px}
+.quickgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.quick{padding:13px;border-radius:13px;border:1px solid var(--line);background:#ffffff04;text-align:left}.quick strong{display:block;font-size:13px;margin:8px 0 4px}.quick span{font-size:11px;color:var(--muted)}
+.section{display:none}.section.active{display:block}
+.ai-layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:16px}.chatbox{min-height:420px;display:flex;flex-direction:column}.messages{flex:1;display:grid;align-content:start;gap:12px;max-height:440px;overflow:auto;padding:4px}.msg{max-width:88%;padding:12px 14px;border-radius:14px;font-size:13px;line-height:1.6;white-space:pre-wrap}.msg.bot{background:#211a38;border:1px solid #9b6cff26}.msg.user{margin-left:auto;background:linear-gradient(135deg,#7548ce,#a75be5)}.chatentry{display:flex;gap:8px;margin-top:14px}.chatentry textarea{resize:vertical;min-height:44px;max-height:110px}.toolaside .quick{display:block;width:100%;margin-bottom:9px}.toolaside h3{font-size:14px;margin:0 0 13px}
+textarea.field{line-height:1.5}.output{border:1px solid var(--line);background:#0c0a19;border-radius:14px;padding:15px;line-height:1.65;font-size:13px;white-space:pre-wrap;min-height:110px;margin-top:13px}
+.quizquestion{padding:15px;border:1px solid var(--line);border-radius:14px;margin:10px 0;background:#ffffff04}.quizquestion label{display:block;font-size:13px;margin:9px 0;color:var(--muted)}.quizquestion input{accent-color:var(--violet);margin-right:7px}
+.notice{font-size:11px;color:#928aa9;line-height:1.5;margin-top:12px}
+.toast{position:fixed;bottom:20px;right:20px;background:#211a38;border:1px solid #9b6cff55;border-radius:12px;padding:12px 16px;box-shadow:var(--shadow);display:none;z-index:9}
+@media(max-width:950px){.stats{grid-template-columns:repeat(2,1fr)}.layout,.ai-layout{grid-template-columns:1fr}.toolaside{display:grid;grid-template-columns:1fr 1fr;gap:10px}.toolaside h3{grid-column:1/-1}}
+@media(max-width:650px){.app{grid-template-columns:1fr}.sidebar{border-right:0;border-bottom:1px solid var(--line);padding:13px;gap:12px}.brand{padding:0 5px}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap;padding:10px}.navlabel,.sidebottom{display:none}main{padding:19px 13px}.topbar{align-items:flex-start}.profile .profilename{display:none}.stats{gap:9px}.stat{padding:13px}.statnum{font-size:23px}.panel{padding:15px}.addrow{flex-wrap:wrap}.addrow .field{flex-basis:100%}.toolaside{display:block}}
 /* ===== STUDYBOOST 3D NOTEBOOK INTRO ===== */
 
 #notebookIntro {
@@ -224,54 +271,7 @@
   .notebook-name {
     font-size: 26px;
   }
-}<style>
-:root{
- --bg:#080713;--panel:#111022;--panel2:#17142c;--line:rgba(174,142,255,.18);
- --violet:#9b6cff;--pink:#ec71ff;--cyan:#61e7ff;--text:#f4f0ff;--muted:#a7a0c2;
- --good:#70f0c0;--shadow:0 0 35px rgba(137,78,255,.12);
-}
-*{box-sizing:border-box} body{margin:0;background:radial-gradient(ellipse at 20% 0%,#211345 0,transparent 38%),radial-gradient(ellipse at 90% 20%,#10243c 0,transparent 28%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
-button,input,textarea,select{font:inherit}button{cursor:pointer;color:inherit}
-.app{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:100vh}
-.sidebar{padding:25px 16px;border-right:1px solid var(--line);background:rgba(8,7,19,.76);backdrop-filter:blur(20px);display:flex;flex-direction:column;gap:25px}
-.brand{display:flex;align-items:center;gap:11px;padding:0 10px;font-size:20px;font-weight:850;letter-spacing:-.6px}
-.logo{height:38px;width:38px;border-radius:13px;background:linear-gradient(135deg,var(--violet),var(--pink));display:grid;place-items:center;box-shadow:0 0 24px #9b6cff65;font-size:20px}
-.brand span{color:var(--pink)}
-.navlabel{font-size:10px;color:#77718f;letter-spacing:1.8px;font-weight:800;padding:0 12px;margin-bottom:7px}
-.nav{display:grid;gap:6px}.nav button{border:1px solid transparent;background:transparent;padding:12px 13px;border-radius:12px;text-align:left;color:var(--muted);display:flex;gap:12px;align-items:center;transition:.2s}
-.nav button:hover,.nav button.active{color:white;background:linear-gradient(90deg,#8d5aff24,#ec71ff0b);border-color:#9b6cff30}.nav button.active{box-shadow:inset 3px 0 var(--violet)}
-.navicon{width:20px;text-align:center}
-.sidebottom{margin-top:auto;border:1px solid var(--line);border-radius:16px;padding:15px;background:linear-gradient(135deg,#20143a,#101425)}
-.sidebottom b{display:block;margin-bottom:7px}.sidebottom p{color:var(--muted);font-size:12px;line-height:1.5;margin:0 0 12px}
-.mini-btn,.primary,.secondary,.ghost{border:0;border-radius:11px;padding:10px 14px;font-weight:750;transition:.2s}
-.primary{background:linear-gradient(135deg,var(--violet),#c15bff);box-shadow:0 7px 24px #8e55ff35;color:white}.primary:hover{transform:translateY(-1px);filter:brightness(1.12)}
-.secondary{background:#282044;border:1px solid #9b6cff36}.ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}
-main{padding:28px clamp(16px,3vw,42px);max-width:1500px;width:100%;margin:auto}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:28px}.eyebrow{color:var(--cyan);font-size:11px;letter-spacing:2px;font-weight:800;text-transform:uppercase}
-h1{font-size:clamp(26px,3vw,38px);letter-spacing:-1.3px;margin:7px 0 0}.sub{color:var(--muted);margin:8px 0 0;font-size:14px}
-.profile{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:8px 12px;background:#111022}.avatar{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#57ddff,#a76bff);display:grid;place-items:center;color:#080713;font-weight:900}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:20px}
-.stat,.panel{background:linear-gradient(145deg,rgba(22,19,43,.92),rgba(13,12,27,.92));border:1px solid var(--line);border-radius:19px;box-shadow:var(--shadow)}
-.stat{padding:17px;position:relative;overflow:hidden}.stat:after{content:"";position:absolute;width:90px;height:90px;border-radius:50%;background:#9b6cff13;right:-25px;top:-28px}
-.stathead{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.statnum{font-size:27px;font-weight:850;margin-top:10px;letter-spacing:-1px}.statnote{font-size:11px;color:var(--good);margin-top:4px}
-.layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(290px,.85fr);gap:17px}
-.panel{padding:20px;margin-bottom:17px}.panelhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.panelhead h2{font-size:16px;margin:0}.panelhead small{color:var(--muted)}
-.tasklist{display:grid;gap:9px}.task{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid #ffffff0c;background:#ffffff04;border-radius:13px}.task input{accent-color:var(--violet);width:17px;height:17px}.taskbody{flex:1;min-width:0}.taskname{font-size:13px;font-weight:700}.task.done .taskname{text-decoration:line-through;color:#7e7897}.taskmeta{font-size:11px;color:var(--muted);margin-top:4px}.tag{font-size:10px;padding:5px 8px;border-radius:8px;background:#9b6cff18;color:#c3a7ff;border:1px solid #9b6cff2b;white-space:nowrap}.tag.high{color:#ff9ab8;background:#ff669a12;border-color:#ff669a25}
-.addrow{display:flex;gap:8px;margin-top:13px}.field{background:#0b0a18;border:1px solid #ffffff18;color:var(--text);border-radius:11px;padding:11px 12px;min-width:0;width:100%;outline:none}.field:focus{border-color:#9b6cff88;box-shadow:0 0 0 3px #9b6cff12}.addrow .field{flex:1}
-.progressbar{height:7px;background:#ffffff0b;border-radius:99px;overflow:hidden;margin-top:12px}.progressbar span{display:block;height:100%;background:linear-gradient(90deg,var(--violet),var(--cyan));border-radius:99px;transition:width .3s}
-.timer{text-align:center;padding:8px 0 3px}.timer-ring{width:180px;height:180px;margin:10px auto 18px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(var(--violet) 0deg,#61e7ff 210deg,#30234e 210deg 360deg);box-shadow:0 0 35px #9b6cff20}
-.timer-ring:before{content:"";position:absolute;inset:8px;background:#111022;border-radius:50%}.timer-value{position:relative;font-size:39px;font-weight:850;letter-spacing:-1px}.timer-label{position:relative;color:var(--muted);font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
-.timercontrols{display:flex;justify-content:center;gap:9px}.timercontrols button{min-width:92px}
-.quickgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.quick{padding:13px;border-radius:13px;border:1px solid var(--line);background:#ffffff04;text-align:left}.quick strong{display:block;font-size:13px;margin:8px 0 4px}.quick span{font-size:11px;color:var(--muted)}
-.section{display:none}.section.active{display:block}
-.ai-layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:16px}.chatbox{min-height:420px;display:flex;flex-direction:column}.messages{flex:1;display:grid;align-content:start;gap:12px;max-height:440px;overflow:auto;padding:4px}.msg{max-width:88%;padding:12px 14px;border-radius:14px;font-size:13px;line-height:1.6;white-space:pre-wrap}.msg.bot{background:#211a38;border:1px solid #9b6cff26}.msg.user{margin-left:auto;background:linear-gradient(135deg,#7548ce,#a75be5)}.chatentry{display:flex;gap:8px;margin-top:14px}.chatentry textarea{resize:vertical;min-height:44px;max-height:110px}.toolaside .quick{display:block;width:100%;margin-bottom:9px}.toolaside h3{font-size:14px;margin:0 0 13px}
-textarea.field{line-height:1.5}.output{border:1px solid var(--line);background:#0c0a19;border-radius:14px;padding:15px;line-height:1.65;font-size:13px;white-space:pre-wrap;min-height:110px;margin-top:13px}
-.quizquestion{padding:15px;border:1px solid var(--line);border-radius:14px;margin:10px 0;background:#ffffff04}.quizquestion label{display:block;font-size:13px;margin:9px 0;color:var(--muted)}.quizquestion input{accent-color:var(--violet);margin-right:7px}
-.notice{font-size:11px;color:#928aa9;line-height:1.5;margin-top:12px}
-.toast{position:fixed;bottom:20px;right:20px;background:#211a38;border:1px solid #9b6cff55;border-radius:12px;padding:12px 16px;box-shadow:var(--shadow);display:none;z-index:9}
-@media(max-width:950px){.stats{grid-template-columns:repeat(2,1fr)}.layout,.ai-layout{grid-template-columns:1fr}.toolaside{display:grid;grid-template-columns:1fr 1fr;gap:10px}.toolaside h3{grid-column:1/-1}}
-@media(max-width:650px){.app{grid-template-columns:1fr}.sidebar{border-right:0;border-bottom:1px solid var(--line);padding:13px;gap:12px}.brand{padding:0 5px}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap;padding:10px}.navlabel,.sidebottom{display:none}main{padding:19px 13px}.topbar{align-items:flex-start}.profile .profilename{display:none}.stats{gap:9px}.stat{padding:13px}.statnum{font-size:23px}.panel{padding:15px}.addrow{flex-wrap:wrap}.addrow .field{flex-basis:100%}.toolaside{display:block}}
-</style>
+}</style>
 </head>
 <body>
 <div class="app">
@@ -353,6 +353,7 @@ function makeSummary(){let raw=document.getElementById("courseText").value.trim(
 function makeQuiz(){let raw=document.getElementById("courseText").value.trim();if(!raw){toast("Colle ton cours d’abord !");return}let sentences=raw.replace(/\s+/g," ").split(/(?<=[.!?])\s+/).filter(s=>s.length>25).slice(0,4);let host=document.getElementById("quizOutput");host.innerHTML="<h3 style='font-size:15px;margin-top:18px'>Mini-quiz de rappel ✧</h3>";if(!sentences.length){host.textContent="Ton texte est trop court pour créer des questions. Ajoute quelques phrases.";return}sentences.forEach((s,i)=>{let q=document.createElement("div");q.className="quizquestion";let p=document.createElement("p");p.style.fontSize="13px";p.textContent=(i+1)+". Reformule cette idée avec tes mots : "+s;let area=document.createElement("textarea");area.className="field";area.rows=2;area.placeholder="Ta réponse…";q.append(p,area);host.appendChild(q)});let note=document.createElement("p");note.className="notice";note.textContent="Quiz de rappel basé sur les phrases du texte : les réponses ne sont pas corrigées automatiquement.";host.appendChild(note);toast("Quiz créé 🧠")}
 function makeSchedule(){let open=tasks.filter(t=>!t.done);let el=document.getElementById("schedule");if(!el)return;let entries=open.slice(0,5);if(!entries.length){el.innerHTML="<p class='notice'>Toutes tes missions sont terminées ! Ajoute un devoir pour planifier une session.</p>";return}el.innerHTML="";entries.forEach((t,i)=>{let row=document.createElement("div");row.className="task";row.style.marginBottom="8px";let time=document.createElement("span");time.className="tag";time.textContent=["16:00","16:30","17:00","17:30","18:00"][i];let body=document.createElement("div");body.className="taskbody";let name=document.createElement("div");name.className="taskname";name.textContent=t.title;let meta=document.createElement("div");meta.className="taskmeta";meta.textContent="Session de focus · 25 min";body.append(name,meta);row.append(time,body);el.appendChild(row)})}
 renderTasks();displayTimer();makeSchedule();
+</script>
 /* ===== NOTEBOOK INTRO ANIMATION ===== */
 
 const notebookIntro = document.getElementById("notebookIntro");
@@ -385,6 +386,5 @@ openNotebookBtn.addEventListener("click", () => {
 
 /* Empêcher le scroll derrière le cahier */
 
-document.body.style.overflow = "hidden";</script>
-</body>
+document.body.style.overflow = "hidden";</body>
 </html>
