@@ -1,94 +1,101 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>StudyBoost — Ton espace de révision</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyBoost — Future of Learning</title>
 <style>
-:root{--bg:#f5f6ff;--ink:#1c1b38;--muted:#777794;--purple:#6d5ce8;--lav:#eeeaff;--line:#e9e8fa;--green:#dff8ed;--white:#fff}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
-button,input,textarea,select{font:inherit}button{cursor:pointer;border:0}
-.layout{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
-aside{background:#fff;border-right:1px solid var(--line);padding:24px 17px;display:flex;flex-direction:column;gap:25px}
-.brand{font-weight:900;font-size:21px;display:flex;gap:10px;align-items:center}.logo{background:linear-gradient(135deg,#6d5ce8,#a89cff);color:#fff;border-radius:12px;width:38px;height:38px;display:grid;place-items:center}
-.navtitle{font-size:10px;letter-spacing:1.3px;color:#aaa;text-transform:uppercase;font-weight:800;padding:0 9px}.nav{display:grid;gap:6px}.nav button{text-align:left;background:transparent;color:#74738f;padding:11px;border-radius:11px;font-weight:700}.nav button.active,.nav button:hover{background:var(--lav);color:var(--purple)}.nav button span{margin-right:9px}
-aside .note{margin-top:auto;background:linear-gradient(145deg,#f0edff,#e4fbf1);padding:16px;border-radius:16px;font-size:12px;color:#666780}.note b{display:block;color:var(--ink);font-size:14px;margin-bottom:5px}
-main{padding:27px clamp(16px,4vw,42px);max-width:1400px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;gap:12px}.top small{color:var(--muted);font-weight:700}.top h1{margin:3px 0;font-size:27px;letter-spacing:-1px}.avatar{background:#ffe4b9;padding:9px 12px;border-radius:12px;font-weight:800}
-.hero{border-radius:22px;background:linear-gradient(110deg,#6d5ce8,#9284f8);color:white;padding:25px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px}.hero h2{font-size:24px;margin:0 0 6px;letter-spacing:-.6px}.hero p{margin:0;color:#eeeaff}.hero button{background:white;color:var(--purple);font-weight:800;padding:12px 15px;border-radius:11px;white-space:nowrap}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:17px 0}.stat,.panel{background:white;border:1px solid var(--line);border-radius:17px;padding:17px}.stat .emoji{display:inline-grid;place-items:center;background:var(--lav);width:34px;height:34px;border-radius:10px;margin-bottom:8px}.stat strong{display:block;font-size:24px;letter-spacing:-1px}.stat small{color:var(--muted)}
-.grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(260px,.85fr);gap:16px}.stack{display:grid;gap:16px;align-content:start}.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}.head h3{margin:0;font-size:16px}.sub{font-size:12px;color:var(--muted)}
-form.add{display:flex;gap:8px;margin-bottom:12px}input,textarea,select{border:1px solid var(--line);border-radius:10px;padding:10px 11px;background:white;color:var(--ink);outline:none;width:100%;min-width:0}input:focus,textarea:focus,select:focus{border-color:var(--purple)}.btn{padding:10px 14px;border-radius:10px;font-weight:800;background:var(--purple);color:#fff}.btn.light{background:var(--lav);color:var(--purple)}.btn.white{background:white;color:var(--purple)}
-.tasks{display:grid;gap:8px}.task{display:flex;align-items:center;gap:10px;padding:11px;border:1px solid #f0effa;border-radius:11px}.task input{width:17px;height:17px;accent-color:var(--purple)}.task .txt{flex:1;font-weight:650;overflow-wrap:anywhere}.task.done .txt{text-decoration:line-through;color:#aaa}.chip{background:var(--lav);color:var(--purple);font-size:11px;font-weight:800;padding:4px 8px;border-radius:7px}.delete{background:transparent;color:#aaa;font-size:18px;padding:0 3px}.progress{height:6px;background:#eeeaff;border-radius:9px;margin:16px 0 5px;overflow:hidden}.progress span{display:block;height:100%;background:var(--purple);width:0}
-.timer{text-align:center;font-size:43px;font-weight:900;letter-spacing:-2px;margin:10px 0}.center{text-align:center}.actions{display:flex;justify-content:center;gap:8px;margin-top:12px}.actions button{padding:10px 13px;border-radius:10px;font-weight:800}
-textarea{resize:vertical;min-height:110px}.fieldlabel{display:block;font-size:12px;color:var(--muted);font-weight:800;margin:10px 0 5px}.output{background:#faf9ff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:12px;white-space:pre-wrap;font-size:13px;overflow-wrap:anywhere;min-height:40px}.output:empty{display:none}.flashcard{background:linear-gradient(140deg,#f1eeff,#e9fbf4);border-radius:14px;padding:18px;min-height:100px;display:grid;place-items:center;text-align:center;font-weight:750;margin:10px 0}.flashcard small{display:block;color:var(--muted);font-weight:600;margin-bottom:5px}.tip{background:#e8faf3}.tip p{color:#557568;font-size:13px;margin-bottom:0}
-footer{text-align:center;color:#aaa;font-size:11px;padding:22px}
-@media(max-width:850px){.layout{grid-template-columns:1fr}aside{display:none}.grid{grid-template-columns:1fr}.hero{align-items:flex-start;flex-direction:column}.hero h2{font-size:21px}}
-@media(max-width:540px){main{padding:17px}.stats{gap:8px}.stat{padding:12px}.stat strong{font-size:20px}.stat small{font-size:11px}.top h1{font-size:23px}.avatar{font-size:12px}.hero{padding:21px}.panel{padding:14px}}
+:root{
+ --bg:#080713;--panel:#111022;--panel2:#17142c;--line:rgba(174,142,255,.18);
+ --violet:#9b6cff;--pink:#ec71ff;--cyan:#61e7ff;--text:#f4f0ff;--muted:#a7a0c2;
+ --good:#70f0c0;--shadow:0 0 35px rgba(137,78,255,.12);
+}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(ellipse at 20% 0%,#211345 0,transparent 38%),radial-gradient(ellipse at 90% 20%,#10243c 0,transparent 28%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+button,input,textarea,select{font:inherit}button{cursor:pointer;color:inherit}
+.app{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:100vh}
+.sidebar{padding:25px 16px;border-right:1px solid var(--line);background:rgba(8,7,19,.76);backdrop-filter:blur(20px);display:flex;flex-direction:column;gap:25px}
+.brand{display:flex;align-items:center;gap:11px;padding:0 10px;font-size:20px;font-weight:850;letter-spacing:-.6px}
+.logo{height:38px;width:38px;border-radius:13px;background:linear-gradient(135deg,var(--violet),var(--pink));display:grid;place-items:center;box-shadow:0 0 24px #9b6cff65;font-size:20px}
+.brand span{color:var(--pink)}
+.navlabel{font-size:10px;color:#77718f;letter-spacing:1.8px;font-weight:800;padding:0 12px;margin-bottom:7px}
+.nav{display:grid;gap:6px}.nav button{border:1px solid transparent;background:transparent;padding:12px 13px;border-radius:12px;text-align:left;color:var(--muted);display:flex;gap:12px;align-items:center;transition:.2s}
+.nav button:hover,.nav button.active{color:white;background:linear-gradient(90deg,#8d5aff24,#ec71ff0b);border-color:#9b6cff30}.nav button.active{box-shadow:inset 3px 0 var(--violet)}
+.navicon{width:20px;text-align:center}
+.sidebottom{margin-top:auto;border:1px solid var(--line);border-radius:16px;padding:15px;background:linear-gradient(135deg,#20143a,#101425)}
+.sidebottom b{display:block;margin-bottom:7px}.sidebottom p{color:var(--muted);font-size:12px;line-height:1.5;margin:0 0 12px}
+.mini-btn,.primary,.secondary,.ghost{border:0;border-radius:11px;padding:10px 14px;font-weight:750;transition:.2s}
+.primary{background:linear-gradient(135deg,var(--violet),#c15bff);box-shadow:0 7px 24px #8e55ff35;color:white}.primary:hover{transform:translateY(-1px);filter:brightness(1.12)}
+.secondary{background:#282044;border:1px solid #9b6cff36}.ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}
+main{padding:28px clamp(16px,3vw,42px);max-width:1500px;width:100%;margin:auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:28px}.eyebrow{color:var(--cyan);font-size:11px;letter-spacing:2px;font-weight:800;text-transform:uppercase}
+h1{font-size:clamp(26px,3vw,38px);letter-spacing:-1.3px;margin:7px 0 0}.sub{color:var(--muted);margin:8px 0 0;font-size:14px}
+.profile{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:8px 12px;background:#111022}.avatar{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#57ddff,#a76bff);display:grid;place-items:center;color:#080713;font-weight:900}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:20px}
+.stat,.panel{background:linear-gradient(145deg,rgba(22,19,43,.92),rgba(13,12,27,.92));border:1px solid var(--line);border-radius:19px;box-shadow:var(--shadow)}
+.stat{padding:17px;position:relative;overflow:hidden}.stat:after{content:"";position:absolute;width:90px;height:90px;border-radius:50%;background:#9b6cff13;right:-25px;top:-28px}
+.stathead{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.statnum{font-size:27px;font-weight:850;margin-top:10px;letter-spacing:-1px}.statnote{font-size:11px;color:var(--good);margin-top:4px}
+.layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(290px,.85fr);gap:17px}
+.panel{padding:20px;margin-bottom:17px}.panelhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.panelhead h2{font-size:16px;margin:0}.panelhead small{color:var(--muted)}
+.tasklist{display:grid;gap:9px}.task{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid #ffffff0c;background:#ffffff04;border-radius:13px}.task input{accent-color:var(--violet);width:17px;height:17px}.taskbody{flex:1;min-width:0}.taskname{font-size:13px;font-weight:700}.task.done .taskname{text-decoration:line-through;color:#7e7897}.taskmeta{font-size:11px;color:var(--muted);margin-top:4px}.tag{font-size:10px;padding:5px 8px;border-radius:8px;background:#9b6cff18;color:#c3a7ff;border:1px solid #9b6cff2b;white-space:nowrap}.tag.high{color:#ff9ab8;background:#ff669a12;border-color:#ff669a25}
+.addrow{display:flex;gap:8px;margin-top:13px}.field{background:#0b0a18;border:1px solid #ffffff18;color:var(--text);border-radius:11px;padding:11px 12px;min-width:0;width:100%;outline:none}.field:focus{border-color:#9b6cff88;box-shadow:0 0 0 3px #9b6cff12}.addrow .field{flex:1}
+.progressbar{height:7px;background:#ffffff0b;border-radius:99px;overflow:hidden;margin-top:12px}.progressbar span{display:block;height:100%;background:linear-gradient(90deg,var(--violet),var(--cyan));border-radius:99px;transition:width .3s}
+.timer{text-align:center;padding:8px 0 3px}.timer-ring{width:180px;height:180px;margin:10px auto 18px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(var(--violet) 0deg,#61e7ff 210deg,#30234e 210deg 360deg);box-shadow:0 0 35px #9b6cff20}
+.timer-ring:before{content:"";position:absolute;inset:8px;background:#111022;border-radius:50%}.timer-value{position:relative;font-size:39px;font-weight:850;letter-spacing:-1px}.timer-label{position:relative;color:var(--muted);font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+.timercontrols{display:flex;justify-content:center;gap:9px}.timercontrols button{min-width:92px}
+.quickgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.quick{padding:13px;border-radius:13px;border:1px solid var(--line);background:#ffffff04;text-align:left}.quick strong{display:block;font-size:13px;margin:8px 0 4px}.quick span{font-size:11px;color:var(--muted)}
+.section{display:none}.section.active{display:block}
+.ai-layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:16px}.chatbox{min-height:420px;display:flex;flex-direction:column}.messages{flex:1;display:grid;align-content:start;gap:12px;max-height:440px;overflow:auto;padding:4px}.msg{max-width:88%;padding:12px 14px;border-radius:14px;font-size:13px;line-height:1.6;white-space:pre-wrap}.msg.bot{background:#211a38;border:1px solid #9b6cff26}.msg.user{margin-left:auto;background:linear-gradient(135deg,#7548ce,#a75be5)}.chatentry{display:flex;gap:8px;margin-top:14px}.chatentry textarea{resize:vertical;min-height:44px;max-height:110px}.toolaside .quick{display:block;width:100%;margin-bottom:9px}.toolaside h3{font-size:14px;margin:0 0 13px}
+textarea.field{line-height:1.5}.output{border:1px solid var(--line);background:#0c0a19;border-radius:14px;padding:15px;line-height:1.65;font-size:13px;white-space:pre-wrap;min-height:110px;margin-top:13px}
+.quizquestion{padding:15px;border:1px solid var(--line);border-radius:14px;margin:10px 0;background:#ffffff04}.quizquestion label{display:block;font-size:13px;margin:9px 0;color:var(--muted)}.quizquestion input{accent-color:var(--violet);margin-right:7px}
+.notice{font-size:11px;color:#928aa9;line-height:1.5;margin-top:12px}
+.toast{position:fixed;bottom:20px;right:20px;background:#211a38;border:1px solid #9b6cff55;border-radius:12px;padding:12px 16px;box-shadow:var(--shadow);display:none;z-index:9}
+@media(max-width:950px){.stats{grid-template-columns:repeat(2,1fr)}.layout,.ai-layout{grid-template-columns:1fr}.toolaside{display:grid;grid-template-columns:1fr 1fr;gap:10px}.toolaside h3{grid-column:1/-1}}
+@media(max-width:650px){.app{grid-template-columns:1fr}.sidebar{border-right:0;border-bottom:1px solid var(--line);padding:13px;gap:12px}.brand{padding:0 5px}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap;padding:10px}.navlabel,.sidebottom{display:none}main{padding:19px 13px}.topbar{align-items:flex-start}.profile .profilename{display:none}.stats{gap:9px}.stat{padding:13px}.statnum{font-size:23px}.panel{padding:15px}.addrow{flex-wrap:wrap}.addrow .field{flex-basis:100%}.toolaside{display:block}}
 </style>
 </head>
-<body><div class="layout">
-<aside><div class="brand"><div class="logo">S</div>StudyBoost</div>
-<div><div class="navtitle">Mon espace</div><nav class="nav">
-<button class="active" onclick="scrollTo(0,0)"><span>🏠</span>Accueil</button>
-<button onclick="go('tasks-panel')"><span>📝</span>Mes devoirs</button>
-<button onclick="go('focus-panel')"><span>⏱️</span>Mode focus</button>
-<button onclick="go('revision-panel')"><span>🧠</span>Fiches & quiz</button>
-<button onclick="go('helper-panel')"><span>🤖</span>Assistant de cours</button>
-</nav></div><div class="note"><b>🌱 Un pas à la fois</b>Tu n’as pas besoin de tout faire d’un coup. Chaque petite session compte.</div>
+<body>
+<div class="app">
+<aside class="sidebar">
+ <div class="brand"><div class="logo">✦</div>Study<span>Boost</span></div>
+ <div><div class="navlabel">WORKSPACE</div><nav class="nav">
+  <button class="active" data-section="dashboard"><span class="navicon">⌂</span> Dashboard</button>
+  <button data-section="assistant"><span class="navicon">✧</span> Assistant IA</button>
+  <button data-section="summary"><span class="navicon">▤</span> Résumés & quiz</button>
+  <button data-section="planner"><span class="navicon">◷</span> Planning</button>
+ </nav></div>
+ <div class="sidebottom"><b>✦ Mode focus activé</b><p>Chaque petite session te rapproche de tes objectifs.</p><button class="mini-btn primary" onclick="switchSection('planner')">Lancer une session</button></div>
 </aside>
 <main>
-<header class="top"><div><small id="date"></small><h1>Salut, champion·ne ! 👋</h1></div><div class="avatar">🎓 Mon espace</div></header>
-<section class="hero"><div><h2>On fait avancer tes objectifs ? ✨</h2><p>Planifie, révise et progresse à ton rythme.</p></div><button onclick="go('new-task')">＋ Ajouter un devoir</button></section>
-<section class="stats"><div class="stat"><span class="emoji">📚</span><strong id="left">0</strong><small>À faire</small></div><div class="stat"><span class="emoji">🎯</span><strong id="done">0</strong><small>Terminés</small></div><div class="stat"><span class="emoji">🌟</span><strong id="pct">0%</strong><small>Progression</small></div></section>
-<section class="grid">
-<div class="stack">
-<div class="panel" id="tasks-panel"><div class="head"><h3>📝 Mes devoirs</h3><span class="sub">Ta liste</span></div>
-<form class="add" id="task-form"><input id="new-task" placeholder="Ex. Relire le chapitre 4…" maxlength="120" required><button class="btn">Ajouter</button></form><div class="tasks" id="tasks"></div><div class="progress"><span id="bar"></span></div><div class="sub" id="progress-text"></div>
-</div>
-<div class="panel" id="revision-panel"><div class="head"><h3>🧠 Fiche & quiz express</h3><span class="chip">Gratuit</span></div>
-<label class="fieldlabel" for="lesson">Colle un extrait de ton cours ici</label><textarea id="lesson" placeholder="Ex. La photosynthèse est le processus par lequel les plantes..."></textarea>
-<div class="actions" style="justify-content:flex-start"><button class="btn" id="make-summary">Créer une fiche</button><button class="btn light" id="make-quiz">Créer un quiz</button></div><div class="output" id="revision-output"></div>
-</div>
-</div>
-<div class="stack">
-<div class="panel" id="focus-panel"><div class="head"><h3>⏱️ Mode focus</h3><span class="chip">Pomodoro</span></div><div class="timer" id="timer">25:00</div><div class="sub center" id="timer-caption">Une session de concentration, sans pression.</div><div class="actions"><button class="btn" id="start">Démarrer</button><button class="btn light" id="reset">Reset</button></div></div>
-<div class="panel" id="helper-panel"><div class="head"><h3>🤖 Assistant de cours</h3><span class="chip">Mode démo</span></div><p class="sub">Pose une question sur ton cours. Cet assistant local propose une aide simple, sans connexion à une IA en ligne.</p><label class="fieldlabel" for="question">Ta question</label><input id="question" placeholder="Ex. Explique-moi la photosynthèse"><button class="btn" style="margin-top:9px" id="ask">M’aider à comprendre</button><div class="output" id="answer"></div></div>
-<div class="panel tip"><h3>💡 Conseil du jour</h3><p>Essaie de travailler par petites étapes : commence par 10 minutes, puis fais une pause. Le plus dur, c’est souvent de se lancer !</p></div>
-</div></section><footer>StudyBoost • Prototype gratuit • Tes tâches sont sauvegardées sur cet appareil</footer>
-</main></div>
-<script>
-const $=id=>document.getElementById(id);
-$('date').textContent=new Intl.DateTimeFormat('fr-FR',{weekday:'long',day:'numeric',month:'long'}).format(new Date()).toUpperCase();
-function go(id){$(id).scrollIntoView({behavior:'smooth',block:'center'});if(id==='new-task')$('new-task').focus()}
-let tasks=[];try{tasks=JSON.parse(localStorage.getItem('studyboost_tasks')||'[]')}catch(e){tasks=[]}
-if(!tasks.length)tasks=[{text:'Exercices de maths — page 42',done:false},{text:'Apprendre le vocabulaire anglais',done:false},{text:'Lire 10 pages du livre',done:false}];
-function save(){try{localStorage.setItem('studyboost_tasks',JSON.stringify(tasks))}catch(e){}}
-function render(){
- const box=$('tasks');box.innerHTML='';
- tasks.forEach((t,i)=>{const row=document.createElement('div');row.className='task'+(t.done?' done':'');
- const cb=document.createElement('input');cb.type='checkbox';cb.checked=t.done;cb.setAttribute('aria-label','Terminer '+t.text);cb.onchange=()=>{tasks[i].done=cb.checked;save();render()};
- const txt=document.createElement('span');txt.className='txt';txt.textContent=t.text;
- const chip=document.createElement('span');chip.className='chip';chip.textContent=t.done?'Terminé':'À faire';
- const del=document.createElement('button');del.className='delete';del.textContent='×';del.title='Supprimer';del.onclick=()=>{tasks.splice(i,1);save();render()};
- row.append(cb,txt,chip,del);box.append(row)});
- const completed=tasks.filter(t=>t.done).length,total=tasks.length,ratio=total?Math.round(completed/total*100):0;
- $('left').textContent=total-completed;$('done').textContent=completed;$('pct').textContent=ratio+'%';$('bar').style.width=ratio+'%';$('progress-text').textContent=`${completed} sur ${total} terminé${completed>1?'s':''}`;save();
-}
-$('task-form').onsubmit=e=>{e.preventDefault();let v=$('new-task').value.trim();if(v){tasks.push({text:v,done:false});$('new-task').value='';render()}};
-render();
-// Pomodoro
-let secs=1500,interval=null;
-function show(){ $('timer').textContent=String(Math.floor(secs/60)).padStart(2,'0')+':'+String(secs%60).padStart(2,'0')}
-$('start').onclick=()=>{if(interval){clearInterval(interval);interval=null;$('start').textContent='Reprendre';return} $('start').textContent='Pause';interval=setInterval(()=>{secs--;show();if(secs<=0){clearInterval(interval);interval=null;$('start').textContent='Démarrer';$('timer-caption').textContent='Session terminée, bravo ! 🎉'}},1000)};
-$('reset').onclick=()=>{clearInterval(interval);interval=null;secs=1500;show();$('start').textContent='Démarrer';$('timer-caption').textContent='Une session de concentration, sans pression.'};
-// Local course helpers, no API
-function getText(){return $('lesson').value.trim()}
-$('make-summary').onclick=()=>{let s=getText();if(!s){$('revision-output').textContent='Ajoute d’abord un extrait de cours 🙂';return}
-let sentences=s.split(/(?<=[.!?])\s+/).filter(x=>x.trim());let summary=sentences.slice(0,5).map(x=>'• '+x.trim()).join('\n');
-$('revision-output').textContent='📌 FICHE EXPRESS\n\n'+(summary||s)+'\n\nAstuce : relis chaque point, puis essaie de le reformuler avec tes propres mots.'};
-$('make-quiz').onclick=()=>{let s=getText();if(!s){$('revision-output').textContent='Ajoute d’abord un extrait de cours 🙂';return}
-let terms=s.split(/[,.!?;:\n]/).map(x=>x.trim()).filter(x=>x.length>18).slice(0,5);
-$('revision-output').textContent='🧩 QUESTIONS POUR TE TESTER\n\n'+(terms.length?terms.map((x,i)=>(i+1)+'. Explique avec tes mots : « '+x+' »').join('\n\n'):'1. Quel est le sujet principal de cet extrait ?\n2. Cite deux idées importantes.\n3. Explique le cours avec tes propres mots.')+'\n\nRéponds sur une feuille, puis compare avec ton cours.'};
-$('ask').onclick=()=>{let q=$('question').value.trim(),course=getText();if(!q){$('answer').textContent='Écris une question pour commencer 🙂';return}
-if(course){$('answer').textContent='📝 Pour t’aider à réfléchir :\n\nTa question : '+q+'\n\nRelis cet extrait de ton cours et repère les phrases qui répondent à ta question :\n'+course.slice(0,1100)+'\n\nJe suis ici en mode démo local : pour une explication IA personnalisée, il faudra connecter un service IA.'}
-else $('answer').textContent='🧠 Bonne question ! Ajoute ton cours dans la zone « Fiche & quiz express » pour que je puisse t’aider à repérer les idées liées. Cette version est une démo locale, sans véritable IA connectée.'};
-</script></body></html>
+<header class="topbar"><div><div class="eyebrow">STUDENT OS · NEXT GEN</div><h1 id="pageTitle">Ton espace de réussite.</h1><p class="sub" id="pageSub">Prêt·e à faire décoller tes révisions ?</p></div><div class="profile"><div class="avatar">S</div><span class="profilename"><b>Study mode</b><br><small style="color:var(--muted)">En progression ✨</small></span></div></header>
+
+<section class="section active" id="dashboard">
+ <div class="stats">
+  <div class="stat"><div class="stathead"><span>Devoirs terminés</span><span>✓</span></div><div class="statnum" id="statDone">0</div><div class="statnote">Continue comme ça</div></div>
+  <div class="stat"><div class="stathead"><span>À faire</span><span>◈</span></div><div class="statnum" id="statTodo">0</div><div class="statnote" style="color:var(--muted)">Priorité à tes tâches</div></div>
+  <div class="stat"><div class="stathead"><span>Progression</span><span>↗</span></div><div class="statnum" id="statProgress">0%</div><div class="progressbar"><span id="progressFill" style="width:0%"></span></div></div>
+  <div class="stat"><div class="stathead"><span>Focus du jour</span><span>◷</span></div><div class="statnum" id="focusStat">0 min</div><div class="statnote">Minutes chronométrées</div></div>
+ </div>
+ <div class="layout"><div>
+  <div class="panel"><div class="panelhead"><h2>⚡ Missions du jour</h2><small id="taskCount">0 tâche</small></div><div class="tasklist" id="taskList"></div><div class="addrow"><input id="taskInput" class="field" placeholder="Ajouter un devoir…"><select id="taskPriority" class="field" style="max-width:120px"><option>Normal</option><option>Prioritaire</option></select><button class="primary" onclick="addTask()">＋ Ajouter</button></div></div>
+  <div class="panel"><div class="panelhead"><h2>✧ Accès rapide</h2><small>Ton toolkit</small></div><div class="quickgrid">
+   <button class="quick" onclick="switchSection('assistant')">✦<strong>Parler à l’IA</strong><span>Pose tes questions de cours</span></button>
+   <button class="quick" onclick="switchSection('summary')">▤<strong>Créer un quiz</strong><span>Teste tes connaissances</span></button>
+   <button class="quick" onclick="switchSection('planner')">◷<strong>Mode Pomodoro</strong><span>Focus sans distraction</span></button>
+   <button class="quick" onclick="switchSection('planner')">⌁<strong>Organiser ma semaine</strong><span>Planifie tes sessions</span></button>
+  </div></div>
+ </div><div>
+  <div class="panel"><div class="panelhead"><h2>◷ Focus session</h2><span class="tag">Pomodoro</span></div><div class="timer"><div class="timer-ring"><div><div class="timer-value" id="timer">25:00</div><div class="timer-label" id="timerLabel">Focus time</div></div></div><div class="timercontrols"><button class="primary" id="timerStart" onclick="toggleTimer()">▶ Démarrer</button><button class="secondary" onclick="resetTimer()">↺ Reset</button></div><div class="notice">Astuce : 25 minutes de concentration, puis une pause de 5 minutes.</div></div></div>
+  <div class="panel"><div class="panelhead"><h2>✧ Coach motivation</h2></div><p style="font-size:13px;line-height:1.7;color:var(--muted)">Tu n’as pas besoin de tout réussir d’un coup. Une tâche après l’autre, et tu construis ton momentum. 💜</p><button class="ghost" onclick="coachTip()">Un boost motivation ✨</button><div id="coachOutput" class="notice"></div></div>
+ </div></div>
+</section>
+
+<section class="section" id="assistant">
+ <div class="ai-layout"><div class="panel chatbox"><div class="panelhead"><h2>✧ Assistant StudyBoost</h2><span class="tag">Mode démo</span></div><div class="messages" id="messages"><div class="msg bot">Salut ! ✨ Je suis ton assistant StudyBoost en mode démo. Je peux t’aider à structurer tes idées, expliquer une notion ou préparer tes révisions. Pour une IA qui répond librement à toutes les questions, il faudra connecter un service IA via un backend sécurisé.</div></div><div class="chatentry"><textarea class="field" id="chatInput" placeholder="Pose une question de cours…" rows="1"></textarea><button class="primary" onclick="sendChat()">Envoyer ↗</button></div></div>
+ <aside class="panel toolaside"><h3>Prompts rapides</h3><button class="quick" onclick="quickPrompt('Explique-moi une notion simplement, avec un exemple.')">💡<strong>Explique une notion</strong><span>Version facile + exemple</span></button><button class="quick" onclick="quickPrompt('Aide-moi à préparer une méthode de révision.')">📚<strong>Réviser efficacement</strong><span>Plan étape par étape</span></button><button class="quick" onclick="quickPrompt('Pose-moi des questions pour vérifier mes connaissances.')">🧠<strong>Mode interrogation</strong><span>Teste ce que tu sais</span></button><p class="notice">Les réponses de cette démo sont pré-écrites localement : aucune clé API n’est utilisée.</p></aside></div>
+</section>
+
+<section class="section" id="summary">
+ <div class="layout"><div class="panel"><div class="panelhead"><h2>▤ Générateur de résumé</h2><span class="tag">Local</span></div><p class="sub" style="margin:0 0 13px">Colle ton cours pour créer une fiche de révision organisée.</p><textarea class="field" id="courseText" rows="10" placeholder="Colle ici ton cours, tes notes ou un texte…"></textarea><div class="addrow"><button class="primary" onclick="makeSummary()">✧ Créer le résumé</button><button class="secondary" onclick="makeQuiz()">🧠 Générer un mini-quiz</button></div><div id="summaryOutput" class="output">Ton résumé apparaîtra ici…</div><div id="quizOutput"></div></div>
+ <div class="panel"><div class="panelhead"><h2>Conseils de révision</h2></div><ul style="font-size:13px;line-height:1.9;color:var(--muted);padding-left:18px"><li>Découpe ton cours en petites parties.</li><li>Reformule avec tes propres mots.</li><li>Teste-toi sans regarder les notes.</li><li>Reviens sur les notions difficiles.</li></ul><p class="notice">Le générateur local fait une structuration simple. Il ne remplace pas une IA connectée et peut manquer de contexte.</p></div></div>
+</section>
+... (38 lignes restantes)
