@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://skyrox643.github.io/Study.com/sitemap.xml
