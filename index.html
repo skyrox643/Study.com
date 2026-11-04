@@ -4,7 +4,227 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StudyBoost — Future of Learning</title>
-<style>
+/* ===== STUDYBOOST 3D NOTEBOOK INTRO ===== */
+
+#notebookIntro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background:
+    radial-gradient(ellipse at center, #292044 0%, #080713 75%);
+  perspective: 1800px;
+  overflow: hidden;
+  transition: opacity 1s ease, visibility 1s ease;
+}
+
+#notebookIntro.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.notebook-title {
+  color: #f4f0ff;
+  font-size: clamp(24px, 4vw, 42px);
+  font-weight: 900;
+  letter-spacing: -1px;
+  margin-bottom: 45px;
+  text-shadow: 0 0 30px #9b6cff;
+}
+
+.notebook-scene {
+  position: relative;
+  width: min(340px, 75vw);
+  height: min(460px, 65vh);
+  transform-style: preserve-3d;
+  transform: rotateX(8deg) rotateY(-12deg);
+  transition: transform 1s ease;
+}
+
+.notebook-scene.opening {
+  transform: rotateX(0deg) rotateY(0deg) scale(1.15);
+}
+
+.notebook {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  filter: drop-shadow(25px 30px 25px #0008);
+}
+
+.notebook-pages {
+  position: absolute;
+  inset: 8px 0 0 12px;
+  border-radius: 8px 14px 14px 8px;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 23px,
+      #d7dce8 24px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 23px,
+      #d7dce8 24px
+    ),
+    #fffdf4;
+  box-shadow:
+    inset -8px 0 8px #bbb8aa,
+    5px 5px 0 #d5d0c2,
+    10px 10px 0 #bdb8aa;
+}
+
+.notebook-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 1.8s cubic-bezier(.65, 0, .25, 1);
+  border-radius: 8px 14px 14px 8px;
+  background:
+    linear-gradient(90deg, #b78a24 0%, transparent 7%),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 23px,
+      rgba(110, 125, 170, .38) 24px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 23px,
+      rgba(110, 125, 170, .38) 24px
+    ),
+    linear-gradient(135deg, #ffe88a, #f7d65c 50%, #e9bb35);
+  border: 2px solid #d6ad35;
+  box-shadow:
+    inset 5px 0 12px #a87c1e55,
+    inset -3px 0 8px #fff8,
+    0 5px 12px #0003;
+  backface-visibility: hidden;
+}
+
+.notebook-cover::before {
+  content: "";
+  position: absolute;
+  left: 28px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(220, 70, 70, .45);
+}
+
+.notebook-cover::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(150, 105, 20, .25);
+  border-radius: 4px;
+}
+
+.notebook-brand {
+  position: absolute;
+  top: 28%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #74531a;
+  font-size: 12px;
+  letter-spacing: 5px;
+  font-weight: 800;
+}
+
+.notebook-name {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 900;
+  color: #73521b;
+  text-shadow: 0 1px #fff8;
+}
+
+.notebook-subtitle {
+  position: absolute;
+  top: 53%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #8a6828;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.notebook-cover.open {
+  transform: rotateY(-155deg);
+}
+
+.notebook-spiral {
+  position: absolute;
+  z-index: 5;
+  left: -7px;
+  top: 12px;
+  bottom: 12px;
+  width: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.notebook-spiral span {
+  width: 16px;
+  height: 13px;
+  border: 3px solid #b9b9b9;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #666, #eee, #777);
+  box-shadow: 1px 2px 2px #0005;
+}
+
+.notebook-btn {
+  margin-top: 55px;
+  padding: 15px 32px;
+  border: 1px solid #c2a0ff66;
+  border-radius: 15px;
+  color: white;
+  background: linear-gradient(135deg, #9b6cff, #ec71ff);
+  font-size: 15px;
+  font-weight: 850;
+  box-shadow: 0 0 35px #9b6cff55;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.notebook-btn:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 0 50px #9b6cff99;
+}
+
+.notebook-hint {
+  color: #a7a0c2;
+  font-size: 12px;
+  margin-top: 18px;
+  letter-spacing: 1px;
+}
+
+@media(max-width:500px) {
+  .notebook-scene {
+    width: 260px;
+    height: 360px;
+  }
+
+  .notebook-name {
+    font-size: 26px;
+  }
+}<style>
 :root{
  --bg:#080713;--panel:#111022;--panel2:#17142c;--line:rgba(174,142,255,.18);
  --violet:#9b6cff;--pink:#ec71ff;--cyan:#61e7ff;--text:#f4f0ff;--muted:#a7a0c2;
@@ -133,6 +353,38 @@ function makeSummary(){let raw=document.getElementById("courseText").value.trim(
 function makeQuiz(){let raw=document.getElementById("courseText").value.trim();if(!raw){toast("Colle ton cours d’abord !");return}let sentences=raw.replace(/\s+/g," ").split(/(?<=[.!?])\s+/).filter(s=>s.length>25).slice(0,4);let host=document.getElementById("quizOutput");host.innerHTML="<h3 style='font-size:15px;margin-top:18px'>Mini-quiz de rappel ✧</h3>";if(!sentences.length){host.textContent="Ton texte est trop court pour créer des questions. Ajoute quelques phrases.";return}sentences.forEach((s,i)=>{let q=document.createElement("div");q.className="quizquestion";let p=document.createElement("p");p.style.fontSize="13px";p.textContent=(i+1)+". Reformule cette idée avec tes mots : "+s;let area=document.createElement("textarea");area.className="field";area.rows=2;area.placeholder="Ta réponse…";q.append(p,area);host.appendChild(q)});let note=document.createElement("p");note.className="notice";note.textContent="Quiz de rappel basé sur les phrases du texte : les réponses ne sont pas corrigées automatiquement.";host.appendChild(note);toast("Quiz créé 🧠")}
 function makeSchedule(){let open=tasks.filter(t=>!t.done);let el=document.getElementById("schedule");if(!el)return;let entries=open.slice(0,5);if(!entries.length){el.innerHTML="<p class='notice'>Toutes tes missions sont terminées ! Ajoute un devoir pour planifier une session.</p>";return}el.innerHTML="";entries.forEach((t,i)=>{let row=document.createElement("div");row.className="task";row.style.marginBottom="8px";let time=document.createElement("span");time.className="tag";time.textContent=["16:00","16:30","17:00","17:30","18:00"][i];let body=document.createElement("div");body.className="taskbody";let name=document.createElement("div");name.className="taskname";name.textContent=t.title;let meta=document.createElement("div");meta.className="taskmeta";meta.textContent="Session de focus · 25 min";body.append(name,meta);row.append(time,body);el.appendChild(row)})}
 renderTasks();displayTimer();makeSchedule();
-</script>
+/* ===== NOTEBOOK INTRO ANIMATION ===== */
+
+const notebookIntro = document.getElementById("notebookIntro");
+const notebookCover = document.getElementById("notebookCover");
+const notebookScene = document.getElementById("notebookScene");
+const openNotebookBtn = document.getElementById("openNotebook");
+
+let notebookOpened = false;
+
+openNotebookBtn.addEventListener("click", () => {
+
+  if (notebookOpened) return;
+
+  notebookOpened = true;
+
+  openNotebookBtn.textContent = "Ouverture en cours...";
+
+  notebookCover.classList.add("open");
+  notebookScene.classList.add("opening");
+
+  setTimeout(() => {
+
+    notebookIntro.classList.add("hide");
+
+    document.body.style.overflow = "auto";
+
+  }, 1800);
+
+});
+
+/* Empêcher le scroll derrière le cahier */
+
+document.body.style.overflow = "hidden";</script>
 </body>
 </html>
